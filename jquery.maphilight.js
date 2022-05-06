@@ -339,6 +339,7 @@
 							} else {
 								areas = map.find(groupitem);
 							}
+							console.log("Areas found:", areas)
 							var first = this;
 							areas.each(function() {
 								if(this != first) {
