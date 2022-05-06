@@ -1,10 +1,24 @@
+var fs = require('fs');
+var util = require('util');
+var log_file = fs.createWriteStream(__dirname + '/tmp/debug.log', {flags : 'w'});
+var log_stdout = process.stdout;
+
+function log_tf(d) { //
+	log_file.write(util.format(d) + '\n');
+	log_stdout.write(util.format(d) + '\n');
+  };
+
 (function(root, factory) {
+	log_tf("we are here " )
+
 	if (typeof define === 'function' && define.amd) {
 		define(['jquery'], factory);
 	} else {
 		factory(root.jQuery);
 	}
 })(this, function($) {
+	log_tf("we are here 2" )
+
 	var has_VML, has_canvas, create_canvas_for, add_shape_to, clear_canvas, shape_from_area,
 		canvas_style, hex_to_decimal, css3color, is_image_loaded, options_from_area;
 
@@ -318,6 +332,7 @@
 				});
 			}).trigger('alwaysOn.maphilight')
 			.bind('mouseover.maphilight focusin.maphilight', function(e) {
+
 				var shape, area_options, area = e.target;
 				area_options = options_from_area(area, options);
 				if(!area_options.neverOn && !area_options.alwaysOn) {
@@ -339,9 +354,11 @@
 							} else {
 								areas = map.find(groupitem);
 							}
-							console.log("Areas found:", areas)
+							log_tf("Areas found:", areas)
 							var first = this;
 							areas.each(function() {
+								log_tf("we are here 3" )
+
 								if(this != first) {
 									var subarea_options = options_from_area(this, options);
 									if(!subarea_options.neverOn && !subarea_options.alwaysOn) {
@@ -354,6 +371,8 @@
 					}
 					// workaround for IE7, IE8 not rendering the final rectangle in a group
 					if(!has_canvas) {
+						log_tf("we are here4 " )
+
 						$(canvas).append('<v:rect></v:rect>');
 					}
 				}
